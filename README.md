@@ -1,21 +1,44 @@
-# NavIsaaclab PPO
+# NavIsaacLab 2.0
 
-An end-to-end PPO repository for robot PointGoal navigation. It contains both the
-lightweight standalone example and the original Isaac Lab + ProtoMotions CrowdSim
-training stack.
+NavIsaacLab 2.0 provides a training and evaluation stack for human-aware robot navigation in simulated shared human-robot environments. Built on Isaac Lab and ProtoMotions, it supports GPU-parallel simulation, rgb&depth visual observations, navigation environments, PPO, and evaluation tools for studying navigation around dynamic pedestrians. The repository includes the complete Isaac Lab + ProtoMotions CrowdSim training and evaluation pipeline. For the full simulator workflow, see [FULL_PIPELINE.md](FULL_PIPELINE.md) and [CrowdSim/ppo/README.md](CrowdSim/ppo/README.md).
 
-The included 2-D environment is a simulator-free reference pipeline. It keeps the
-same high-level observation and bounded differential-drive action conventions as
-the larger CrowdSim stack without requiring Isaac Sim, scene assets, or checkpoints.
+![NavIsaacLab 2.0 framework](media/framework.png)
 
-For the real simulator pipeline, start with [FULL_PIPELINE.md](FULL_PIPELINE.md)
-and [CrowdSim/ppo/README.md](CrowdSim/ppo/README.md). ProtoMotions source,
-simulator adapters, environments, PPO agents, robot definitions, examples and
-documentation are included in this repository.
+## Links
 
-## Crowd navigation demo
+- [Project website](https://broln7.github.io/NavIsaacLab-web/)
+- [Paper](https://arxiv.org/abs/2606.26265)
+- **Accepted by IEEE Transactions on Automation Science and Engineering (T-ASE).**
 
-![FLUX rollout with 20 humanoids and 3 robots](media/flux_topdown_20h3r.gif)
+## Demo
+
+#### Diverse pedestrian motion generation
+
+<p align="center">
+  <img src="media/flux_humanoid_follow.gif" alt="Close follow-camera view of a humanoid rollout" width="49%" />
+  <img src="media/flux_humanoid_follow_run16.gif" alt="Additional humanoid follow-camera rollout" width="49%" />
+  <br />
+  <img src="media/flux_humanoid_follow_run14.gif" alt="Humanoid follow-camera rollout 14" width="49%" />
+  <img src="media/flux_humanoid_follow_run2.gif" alt="Humanoid follow-camera rollout 2" width="49%" />
+</p>
+
+*The environment provides domain randomization of pedestrian appearance, posture, and motion to train end-to-end social navigation policies.*
+
+#### Crowdnav PPO rollout
+
+![PPO rollout with 20 humanoids and 3 robots](media/flux_topdown_20h3r.gif)
+
+*The system supports parallel policy rollouts, observation collection, and policy training across multiple robots.*
+
+#### Multi-sensor realistic rendering
+
+![PPO rollout with onboard observations](media/ppo_20h20r_run_ep0015.gif)
+
+*The observation information includes the robot's state, photorealistic RGB and depth renderings, and a local occupancy map.*
+
+#### Sim to Real
+
+![NavIsaacLab demonstration](media/navisaaclab_demo_60s_108s.gif)
 
 ## Included
 
@@ -119,12 +142,6 @@ action, raw_action, log_prob, value = model.act(
     neighbors=neighbors,
     neighbor_mask=neighbor_mask,
 )
-```
-
-## Tests
-
-```bash
-pytest
 ```
 
 ## Repository layout
